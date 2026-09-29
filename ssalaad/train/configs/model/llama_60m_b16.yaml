@@ -1,0 +1,58 @@
+# @package _global_
+# Llama-60M, block-16x16. A small demo that trains in minutes.
+name: llama_60m
+model_config:
+  architectures: [LLaMAForCausalLM]
+  model_type: llama
+  hidden_act: silu
+  hidden_size: 512
+  intermediate_size: 1408
+  num_hidden_layers: 8
+  num_attention_heads: 8
+  vocab_size: 32128
+  max_sequence_length: 1024
+  rms_norm_eps: 1.0e-6
+  initializer_range: 0.02
+  bos_token_id: 0
+  eos_token_id: 1
+  pad_token_id: -1
+  tokenizer_id: t5-base
+optim:
+  lr: 3.0e-3
+schedule:
+  total_steps: 11000
+  warmup_steps: 1100
+  min_lr_ratio: 0.1
+data:
+  dataset: allenai/c4
+  dataset_config: en
+  split: train
+  tokenizer: t5-base
+  seq_len: 256
+  batch_size: 512
+  microbatch_size: 64
+trainer:
+  device: cuda
+kd:
+  enabled: false
+mode:
+  globals:
+    J: 1
+    target_rank_ratio: 0.15
+    target_density: 0.05
+    gamma: 0.999
+    K: 10
+    rho: 1.0e-6
+    delta_alpha: 0.04
+    delta_beta: 0.01
+    no_s: false
+    block_p: 16
+    block_q: 16
+  tracked_roles:
+    - attn_q_proj
+    - attn_k_proj
+    - attn_v_proj
+    - attn_o_proj
+    - mlp_gate_proj
+    - mlp_up_proj
+    - mlp_down_proj

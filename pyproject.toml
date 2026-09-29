@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ssalaad"
+version = "0.1.0"
+description = "S-SALAAD: structured sparse-and-low-rank training, compression, and inference."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "torch",
+    "numpy",
+    "transformers",
+    "datasets",
+    "hydra-core",
+    "omegaconf",
+    "safetensors",
+    "sentencepiece",
+    "tqdm",
+    "tilelang; sys_platform == 'linux'",
+    "apache-tvm-ffi; sys_platform == 'linux'",
+    "ninja; sys_platform == 'linux'",
+    "pytest",
+]
+
+[tool.setuptools.packages.find]
+include = ["ssalaad", "ssalaad.*"]
+
+[tool.setuptools.package-data]
+ssalaad = [
+    "train/configs/*.yaml",
+    "train/configs/*/*.yaml",
+    "cpu_sparse/*.cpp",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,17 @@
+# Run artefacts: checkpoints, bundles, metrics, streamed-data cache.
+outputs/
+*.pth
+*.pt
+
+# Local data (training streams from the Hub, so nothing here is required).
+data/
+
+# Python and packaging by-products.
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Editors and OS.
+.DS_Store
+.vscode/
